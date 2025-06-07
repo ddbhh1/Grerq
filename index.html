@@ -76,11 +76,27 @@
             text-align: center;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
         }
 
         .card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .card.new-feature::after {
+            content: "NEW";
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #fdbb2d;
+            color: #1a2a6c;
+            font-weight: 700;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            transform: rotate(5deg);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         .card h2 {
@@ -115,6 +131,24 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20px;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(25deg);
+            transition: all 0.4s;
+        }
+
+        .btn:hover::after {
+            left: 120%;
         }
 
         .btn-primary {
@@ -127,6 +161,12 @@
             background: linear-gradient(to right, #b21f1f, #d62d2d);
             color: white;
             box-shadow: 0 4px 15px rgba(178, 31, 31, 0.4);
+        }
+
+        .btn-tertiary {
+            background: linear-gradient(to right, #0d7a4d, #10a16b);
+            color: white;
+            box-shadow: 0 4px 15px rgba(13, 122, 77, 0.4);
         }
 
         .btn-disabled {
@@ -156,6 +196,37 @@
             color: white;
             font-weight: 500;
             text-align: center;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { background-color: rgba(255, 255, 255, 0.2); }
+            50% { background-color: rgba(255, 255, 255, 0.35); }
+            100% { background-color: rgba(255, 255, 255, 0.2); }
+        }
+
+        .section-info {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-info h3 {
+            color: #1a2a6c;
+            margin-bottom: 15px;
+            font-family: 'Roboto Slab', serif;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .section-info p {
+            color: #555;
+            line-height: 1.6;
         }
 
         footer {
@@ -200,15 +271,15 @@
         </header>
 
         <div class="content">
-            <div class="card">
+            <div class="card new-feature">
                 <h2><i class="fas fa-book-open"></i> Verbal Reasoning</h2>
                 <div class="btn-container">
                     <a href="https://ddbhh1.github.io/Grerq1/" class="btn btn-primary">
                         <i class="fas fa-play-circle"></i> Question 1
                     </a>
-                    <button class="btn btn-disabled">
-                        <i class="fas fa-clock"></i> Question 2 (Coming Soon)
-                    </button>
+                    <a href="https://ddbhh1.github.io/Grerq23v/" class="btn btn-tertiary">
+                        <i class="fas fa-play-circle"></i> Question 2 (Section 3)
+                    </a>
                 </div>
             </div>
 
@@ -225,6 +296,17 @@
             </div>
         </div>
 
+        <div class="section-info">
+            <h3><i class="fas fa-info-circle"></i> What's New in Verbal Reasoning</h3>
+            <p>We've added <strong>Verbal Reasoning Question 2 (Section 3)</strong> to our practice platform! This new question features advanced text completion and sentence equivalence exercises that mimic the complexity of the actual GRE exam. The new question focuses on:</p>
+            <ul style="margin-top: 10px; margin-left: 20px; color: #555;">
+                <li>Vocabulary in context</li>
+                <li>Complex sentence structures</li>
+                <li>Advanced reading comprehension</li>
+                <li>Critical reasoning skills</li>
+            </ul>
+        </div>
+
         <div class="coming-soon">
             <p><i class="fas fa-sync-alt fa-spin"></i> More questions and features are currently in development!</p>
         </div>
@@ -236,15 +318,34 @@
     </div>
 
     <script>
-        // Simple animation for buttons on page load
+        // Enhanced animation for buttons on page load
         document.addEventListener('DOMContentLoaded', function() {
             const buttons = document.querySelectorAll('.btn');
             
             buttons.forEach((button, index) => {
+                button.style.opacity = 0;
+                button.style.transform = 'translateY(20px)';
+                
                 setTimeout(() => {
+                    button.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
                     button.style.opacity = 1;
+                    button.style.transform = 'translateY(0)';
                 }, 300 + (index * 200));
             });
+            
+            // Highlight the new feature
+            const newCard = document.querySelector('.new-feature');
+            if (newCard) {
+                setTimeout(() => {
+                    newCard.style.transform = 'scale(1.02)';
+                    newCard.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.25)';
+                    
+                    setTimeout(() => {
+                        newCard.style.transform = '';
+                        newCard.style.boxShadow = '';
+                    }, 1000);
+                }, 1500);
+            }
         });
     </script>
 </body>
